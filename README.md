@@ -1,144 +1,201 @@
 
-Pose Fitness Evaluator
+# 🧍‍♂️ Pose Fitness Evaluator
 
-Video-based Human Pose Detection and Posture Evaluation System
+### Video-based Human Pose Detection & Posture Evaluation System
 
-1. Problem Statement
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Pose-green)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-Incorrect body posture during physical activities such as exercise, yoga, or fitness training can lead to poor performance and long-term injuries. Manual posture correction requires expert supervision, which is not always accessible.
+---
 
-The objective of this project is to build an automated system that:
+## 📌 Overview
 
-Detects human body keypoints from a video
+Incorrect posture during workouts and physical activities can reduce effectiveness and cause injuries.
+This project provides an **automated posture evaluation system** that analyzes human body pose from video input and gives **visual feedback** using deep learning–based pose estimation.
 
-Analyzes joint angles and body alignment
+---
 
-Provides visual and logical posture feedback
+## 🎯 Problem Statement
 
-2. Solution Overview
+Manual posture correction requires expert supervision, which is not always available.
+The goal of this project is to build a system that:
 
-This project implements a video-based pose evaluation pipeline using a pretrained deep learning pose estimation model.
-The system processes each video frame, extracts human keypoints, evaluates posture quality using geometric rules, and overlays feedback directly onto the video.
+* Detects human body keypoints from video
+* Computes joint angles and body alignment
+* Evaluates posture quality
+* Overlays feedback directly onto the video
 
-The solution works fully offline and can be extended to real-time camera input.
+---
 
-3. System Architecture / Pipeline
+## 💡 Solution Summary
+
+The system uses a **pretrained YOLOv8 Pose model** to extract human keypoints from each video frame.
+Rule-based geometric analysis is applied to evaluate posture and generate interpretable feedback.
+
+✔ Fully offline
+✔ No dataset training required
+✔ Modular and extensible design
+
+---
+
+## 🧠 System Architecture
+
+```
 Input Video
-   ↓
-Frame Extraction (OpenCV)
-   ↓
-Pose Detection (YOLOv8 Pose Model)
-   ↓
+   │
+   ▼
+Frame Capture (OpenCV)
+   │
+   ▼
+Pose Detection (YOLOv8)
+   │
+   ▼
 Keypoint Extraction
-   ↓
-Posture Evaluation (Angle + Alignment Logic)
-   ↓
-Visual Overlay (Skeleton + Feedback)
-   ↓
+   │
+   ▼
+Angle & Alignment Analysis
+   │
+   ▼
+Posture Evaluation
+   │
+   ▼
+Skeleton + Feedback Overlay
+   │
+   ▼
 Output Video
+```
 
-4. Tech Stack
+---
 
-Python
+## 🛠️ Tech Stack
 
-YOLOv8 Pose (Ultralytics)
+| Category   | Tools                     |
+| ---------- | ------------------------- |
+| Language   | Python                    |
+| Model      | YOLOv8 Pose (Ultralytics) |
+| Vision     | OpenCV                    |
+| Math       | NumPy                     |
+| DL Backend | PyTorch                   |
 
-OpenCV
+---
 
-NumPy
+## 📂 Project Structure
 
-PyTorch
-
-5. How It Works (Step-by-Step)
-
-A video file is read frame-by-frame using OpenCV.
-
-Each frame is passed to a YOLOv8 pose detection model.
-
-The model returns 17 body keypoints per detected person.
-
-Joint angles (elbow, knee, back alignment) are calculated using vector geometry.
-
-Rule-based logic evaluates posture quality.
-
-Skeleton, angles, and feedback text are overlaid on the frame.
-
-The processed frames are saved as a new output video.
-
-6. Project Structure
+```
 pose-fitness-evaluator/
 │
 ├── src/
-│   ├── detector.py        # Pose detection using YOLOv8
+│   ├── detector.py        # Pose detection module
 │   ├── evaluator.py       # Posture evaluation logic
-│   ├── utils.py           # Angle and geometry utilities
-│   ├── overlay.py         # Visualization and drawing
-│   └── main.py            # End-to-end execution
+│   ├── utils.py           # Angle & geometry utilities
+│   ├── overlay.py         # Visualization utilities
+│   └── main.py            # End-to-end pipeline
 │
 ├── data/
 │   └── samples/
-│       └── test.mp4       # Input video
+│       └── test.mp4
 │
 ├── outputs/
-│   └── demo_output.mp4    # Output video with overlay
+│   └── demo_output.mp4
 │
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
 
-7. How to Run the Project
-Step 1: Clone the Repository
+---
+
+## ⚙️ How It Works
+
+1. Video is read frame-by-frame using OpenCV
+2. Each frame is passed to the YOLOv8 pose model
+3. Human keypoints (17 per person) are extracted
+4. Joint angles are calculated using vector math
+5. Rule-based logic evaluates posture quality
+6. Skeleton and feedback text are drawn on frames
+7. Output video is saved to disk
+
+---
+
+## ▶️ How to Run
+
+### 1️⃣ Clone Repository
+
+```bash
 git clone https://github.com/Mercer011/pose-fitness-evaluator.git
 cd pose-fitness-evaluator
+```
 
-Step 2: Create Virtual Environment
+### 2️⃣ Create Virtual Environment
+
+```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate
+# Windows: venv\Scripts\activate
+```
 
-Step 3: Install Dependencies
+### 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-Step 4: Run the System
+### 4️⃣ Run the Application
+
+```bash
 python src/main.py
+```
 
+📁 Output video will be generated in the `outputs/` directory.
 
-The output video will be saved in the outputs/ directory.
+---
 
-8. Output
+## 📊 Output Features
 
-Detected skeleton overlay
+* Human skeleton overlay
+* Real-time joint angle visualization
+* Posture quality feedback
+* Processed `.mp4` output video
 
-Joint angle visualization
+---
 
-Posture feedback (e.g., Good posture, Adjust back alignment)
+## ⚠️ Limitations
 
-Processed output video (.mp4)
+* Rule-based evaluation (not ML classification)
+* Single-person focus
+* Sensitive to camera angle and lighting
+* No custom dataset fine-tuning
 
-9. Limitations
+---
 
-Rule-based posture evaluation (not learned)
+## 🚀 Future Enhancements
 
-Single-person evaluation focus
+* Train a posture classification model
+* Multi-person posture analysis
+* Real-time webcam inference
+* Mobile / web deployment
+* Exercise-specific posture scoring
 
-Accuracy depends on camera angle and lighting
+---
 
-No dataset-specific fine-tuning performed
+## 👨‍💻 Author
 
-10. Future Improvements
+**Abhishek**
+Machine Learning & Computer Vision Enthusiast
 
-Train a custom posture classification model
+* GitHub: [https://github.com/Mercer011](https://github.com/Mercer011)
 
-Support real-time webcam inference
+---
 
-Multi-person posture evaluation
+## 📝 Notes for Reviewers
 
-Integration with mobile or web applications
+* Focused on **applied ML engineering**
+* Clean modular design
+* Interpretable evaluation logic
+* Interview-defensible architecture
 
-Fitness-specific exercise recognition
-
-11. Author
-
-Abhishek
-Machine Learning / Computer Vision Enthusiast
-GitHub: https://github.com/Mercer011
+---
 
