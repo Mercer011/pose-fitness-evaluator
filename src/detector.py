@@ -24,16 +24,10 @@ class PoseDetector:
             results[0]        -> the raw YOLO output (optional for drawing)
         """
 
-        # YOLO works directly with BGR frames, no need to convert to RGB.
         results = self.model(frame, verbose=False)
 
-        # Extract all detected persons from the first result
         persons_keypoints = []
 
-        # YOLO returns a results list even for a single image.
-        # results[0].keypoints.xy is a tensor of shape:
-        #   number_of_persons × 17 × 2
-        # Each (x, y) already in pixel coordinates.
         if results and results[0].keypoints is not None:
             for person in results[0].keypoints.xy:
                 # 'person' is a tensor with 17 rows → one per keypoint
