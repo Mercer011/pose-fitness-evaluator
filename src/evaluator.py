@@ -6,7 +6,7 @@ class PoseEvaluator:
     Keypoints follow COCO order (17 points).
     """
 
-    # YOLO keypoint indexing
+ 
     NOSE = 0
     LEFT_EYE = 1
     RIGHT_EYE = 2
@@ -49,7 +49,7 @@ class PoseEvaluator:
         lw = keypoints[self.LEFT_WRIST]
         rw = keypoints[self.RIGHT_WRIST]
 
-        # Validate important keypoints
+       
         important_points = [ls, rs, lh, rh, lk, rk, la, ra]
         if any(not is_valid_keypoint(p) for p in important_points):
             return {"error": "Missing keypoints"}
@@ -95,9 +95,7 @@ class PoseEvaluator:
 
         return assessment
 
-    # --------------------------------------------------------------------
-    # CHECK BACK ALIGNMENT
-    # --------------------------------------------------------------------
+
     def check_back_alignment(self, shoulder, hip, ankle):
         """
         Simple logic: checks if shoulder, hip, ankle are aligned
@@ -119,9 +117,7 @@ class PoseEvaluator:
         else:
             return "bent"
 
-    # --------------------------------------------------------------------
-    # OVERALL FEEDBACK LOGIC
-    # --------------------------------------------------------------------
+
     def generate_feedback(self, left_knee, right_knee, back_status):
         """
         Combines multiple signals to generate simple feedback.
